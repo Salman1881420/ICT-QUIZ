@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT Quiz System - Professional Assessment Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Theme Selection Modal -->
+    <div id="themeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Choose Theme</h3>
+                <button class="btn-close" onclick="closeThemeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="theme-grid">
+                    <div class="theme-card" data-theme="default">
+                        <div class="theme-preview default-theme"></div>
+                        <span>Default Blue</span>
+                    </div>
+                    <div class="theme-card" data-theme="dark">
+                        <div class="theme-preview dark-theme"></div>
+                        <span>Dark Mode</span>
+                    </div>
+                    <div class="theme-card" data-theme="ocean">
+                        <div class="theme-preview ocean-theme"></div>
+                        <span>Ocean Blue</span>
+                    </div>
+                    <div class="theme-card" data-theme="nature">
+                        <div class="theme-preview nature-theme"></div>
+                        <span>Nature Green</span>
+                    </div>
+                    <div class="theme-card" data-theme="royal">
+                        <div class="theme-preview royal-theme"></div>
+                        <span>Royal Purple</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>ICT Quiz System</h1>
+                    <p>Professional Quiz Management & Assessment Platform</p>
+                </div>
+                
+                <div class="login-tabs">
+                    <button class="tab-btn active" onclick="switchTab('admin')">Admin Login</button>
+                    <button class="tab-btn" onclick="switchTab('student')">Student Login</button>
+                    <button class="tab-btn" onclick="switchTab('register')">Register</button>
+                </div>
+
+                <!-- Admin Login -->
+                <div id="adminLogin" class="login-form active">
+                    <form onsubmit="adminLogin(event)">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="adminUsername" value="admin" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="adminPassword" value="admin123" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Login as Admin</button>
+                    </form>
+                </div>
+
+                <!-- Student Login -->
+                <div id="studentLogin" class="login-form">
+                    <form onsubmit="studentLogin(event)">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="studentUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="studentPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Login as Student</button>
+                    </form>
+                </div>
+
+                <!-- Student Registration -->
+                <div id="studentRegister" class="login-form">
+                    <form onsubmit="studentRegister(event)">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="regFullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" id="regUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="regPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="regConfirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full-width">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="screen">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h2>Admin Dashboard</h2>
+                    <span id="currentUserDisplay" class="student-name"></span>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn btn--secondary" onclick="openThemeModal()">Themes</button>
+                    <button class="btn btn--outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" onclick="switchAdminTab('overview')">Overview</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('quizzes')">Manage Quizzes</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('students')">Students</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('monitoring')">Live Monitoring</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('settings')">Settings</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overviewTab" class="admin-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="totalStudents">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalQuizzes">0</h3>
+                        <p>Total Quizzes</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="activeQuizzes">0</h3>
+                        <p>Active Quiz Sessions</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalViolations">0</h3>
+                        <p>Total Violations</p>
+                    </div>
+                </div>
+
+                <div class="card mt-8">
+                    <div class="card__header">
+                        <h3>Recent Activity</h3>
+                    </div>
+                    <div class="card__body">
+                        <div id="recentActivity">
+                            <p class="text-secondary">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Management Tab -->
+            <div id="quizzesTab" class="admin-content">
+                <div class="flex justify-between items-center mb-8">
+                    <h3>Quiz Management</h3>
+                    <button class="btn btn--primary" onclick="showCreateQuiz()">Create New Quiz</button>
+                </div>
+
+                <div id="quizList" class="quiz-list">
+                    <!-- Quiz items will be populated here -->
+                </div>
+            </div>
+
+            <!-- Students Tab -->
+            <div id="studentsTab" class="admin-content">
+                <div class="flex justify-between items-center mb-8">
+                    <h3>Student Management</h3>
+                    <button class="btn btn--secondary" onclick="exportStudentData()">Export Data</button>
+                </div>
+                <div id="studentsList" class="students-list">
+                    <!-- Students will be populated here -->
+                </div>
+            </div>
+
+            <!-- Live Monitoring Tab -->
+            <div id="monitoringTab" class="admin-content">
+                <div class="flex justify-between items-center mb-8">
+                    <h3>Live Quiz Monitoring</h3>
+                    <div class="monitoring-controls">
+                        <button class="btn btn--secondary" onclick="refreshMonitoring()">Refresh</button>
+                        <button class="btn btn--outline" onclick="exportQuizResults()">Export Results</button>
+                    </div>
+                </div>
+                <div id="liveMonitoring" class="monitoring-grid">
+                    <p class="text-secondary">No active quiz sessions</p>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settingsTab" class="admin-content">
+                <h3>System Settings</h3>
+                
+                <div class="settings-grid">
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Change Admin Password</h4>
+                        </div>
+                        <div class="card__body">
+                            <form onsubmit="changeAdminPassword(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirmNewPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn--primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h4>Global Settings</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="form-group">
+                                <label class="form-label">Default Violation Limit</label>
+                                <select class="form-control" id="defaultViolationLimit" onchange="updateGlobalSettings()">
+                                    <option value="3">3 violations</option>
+                                    <option value="5" selected>5 violations</option>
+                                    <option value="6">6 violations</option>
+                                    <option value="999">No limit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Auto-submit on violations</label>
+                                <select class="form-control" id="autoSubmitEnabled" onchange="updateGlobalSettings()">
+                                    <option value="true" selected>Enabled</option>
+                                    <option value="false">Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentDashboard" class="screen">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h2>Student Dashboard</h2>
+                    <span id="studentName" class="student-name"></span>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn btn--secondary" onclick="openThemeModal()">Themes</button>
+                    <button class="btn btn--outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="student-stats">
+                <div class="stat-card">
+                    <h3 id="studentQuizzesTaken">0</h3>
+                    <p>Quizzes Taken</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="studentAverageScore">0%</h3>
+                    <p>Average Score</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="studentViolations">0</h3>
+                    <p>Total Violations</p>
+                </div>
+            </div>
+
+            <div class="quiz-filters mb-8">
+                <h3>Filter Quizzes</h3>
+                <div class="filter-controls">
+                    <select class="form-control" id="classFilter" onchange="filterQuizzes()">
+                        <option value="">All Classes</option>
+                        <option value="Class 10">Class 10</option>
+                        <option value="Class 11">Class 11</option>
+                        <option value="Class 12">Class 12</option>
+                    </select>
+                    <select class="form-control" id="subjectFilter" onchange="filterQuizzes()">
+                        <option value="">All Subjects</option>
+                        <option value="ICT Fundamentals">ICT Fundamentals</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Database Management">Database Management</option>
+                        <option value="Computer Networks">Computer Networks</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="quiz-categories">
+                <h3>Available Quizzes</h3>
+                <div id="studentQuizList" class="quiz-grid">
+                    <!-- Available quizzes will be populated here -->
+                </div>
+            </div>
+
+            <div class="card mt-8">
+                <div class="card__header">
+                    <h3>Quiz History & Results</h3>
+                </div>
+                <div class="card__body">
+                    <div id="quizHistory">
+                        <p class="text-secondary">No quiz history available</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-8">
+                <div class="card__header">
+                    <h3>Notice Board</h3>
+                </div>
+                <div class="card__body">
+                    <div id="noticeBoard">
+                        <p class="text-secondary">No notices from admin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Taking Screen -->
+    <div id="quizScreen" class="screen">
+        <div class="quiz-header">
+            <div class="container">
+                <div class="quiz-info">
+                    <h2 id="quizTitle"></h2>
+                    <div class="quiz-progress">
+                        Question <span id="questionNumber">1</span> of <span id="totalQuestions">10</span>
+                    </div>
+                </div>
+                <div class="quiz-timer">
+                    <div class="timer-display" id="timerDisplay">30:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="question-section">
+                <div class="question-card">
+                    <div class="question-text" id="questionText">
+                        <!-- Question will be displayed here -->
+                    </div>
+                    <div class="options-container" id="optionsContainer">
+                        <!-- Options will be displayed here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-controls">
+                <div class="quiz-navigation">
+                    <button class="btn btn--outline" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                    <button class="btn btn--primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+                    <button class="btn btn--primary hidden" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+                </div>
+                <div class="quiz-actions">
+                    <button class="btn btn--outline" onclick="dropoutQuiz()">Dropout Safely</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="violation-panel" id="violationPanel">
+            <div class="violation-count">
+                Violations: <span id="violationCount">0</span>/<span id="violationLimit">3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Quiz Modal -->
+    <div id="createQuizModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Create New Quiz</h3>
+                <button class="btn-close" onclick="closeCreateQuiz()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="createQuiz(event)">
+                    <div class="form-group">
+                        <label class="form-label">Quiz Title</label>
+                        <input type="text" class="form-control" id="quizTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Class Category</label>
+                        <select class="form-control" id="quizClass" required>
+                            <option value="">Select Class</option>
+                            <option value="Class 10">Class 10</option>
+                            <option value="Class 11">Class 11</option>
+                            <option value="Class 12">Class 12</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <select class="form-control" id="quizSubject" required>
+                            <option value="">Select Subject</option>
+                            <option value="ICT Fundamentals">ICT Fundamentals</option>
+                            <option value="Programming">Programming</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Database Management">Database Management</option>
+                            <option value="Computer Networks">Computer Networks</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (minutes)</label>
+                        <input type="number" class="form-control" id="quizDuration" min="5" max="180" value="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Violation Limit</label>
+                        <select class="form-control" id="violationLimit">
+                            <option value="3">3 violations</option>
+                            <option value="5" selected>5 violations</option>
+                            <option value="6">6 violations</option>
+                            <option value="999">No limit</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Quiz Settings</label>
+                        <div class="quiz-settings">
+                            <label><input type="checkbox" id="shuffleQuestions" checked> Shuffle Questions</label>
+                            <label><input type="checkbox" id="allowRetake"> Allow Retakes</label>
+                            <label><input type="checkbox" id="showResults" checked> Show Results to Students</label>
+                            <label><input type="checkbox" id="antiCheatEnabled" checked> Enable Anti-Cheat</label>
+                        </div>
+                    </div>
+                    
+                    <h4>Questions</h4>
+                    <div id="questionsList">
+                        <!-- Questions will be added here -->
+                    </div>
+                    <button type="button" class="btn btn--secondary" onclick="addQuestion()">Add Question</button>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn--outline" onclick="closeCreateQuiz()">Cancel</button>
+                        <button type="submit" class="btn btn--primary">Create Quiz</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
