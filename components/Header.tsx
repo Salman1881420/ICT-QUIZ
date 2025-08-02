@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, Menu, X, Play, TrendingUp, Star, Clock } from 'lucide-react';
+import { Search, Menu, X, Play, TrendingUp, Star, Clock, Users, User } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -29,6 +30,7 @@ export const Header: React.FC = () => {
     { href: '/trending', label: 'Trending', icon: TrendingUp },
     { href: '/popular', label: 'Popular', icon: Star },
     { href: '/recent', label: 'Recent', icon: Clock },
+    { href: '/community', label: 'Community', icon: Users },
   ];
 
   return (
@@ -76,6 +78,57 @@ export const Header: React.FC = () => {
                 <Search className="w-4 h-4" />
               </Button>
             </form>
+          </div>
+
+          {/* User Menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="rounded-full"
+              >
+                <User className="w-5 h-5" />
+              </Button>
+              
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                  <Link
+                    href="/profile"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setShowUserMenu(false)}
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href="/watchlist"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setShowUserMenu(false)}
+                  >
+                    My Watchlist
+                  </Link>
+                  <Link
+                    href="/history"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setShowUserMenu(false)}
+                  >
+                    Watch History
+                  </Link>
+                  <Link
+                    href="/settings"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setShowUserMenu(false)}
+                  >
+                    Settings
+                  </Link>
+                  <hr className="my-1" />
+                  <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -130,6 +183,26 @@ export const Header: React.FC = () => {
                 <span>{label}</span>
               </Link>
             ))}
+            
+            {/* Mobile User Menu */}
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <Link
+                href="/profile"
+                className="flex items-center space-x-3 text-gray-600 hover:text-primary-600 transition-colors font-medium py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <User className="w-5 h-5" />
+                <span>Profile</span>
+              </Link>
+              <Link
+                href="/watchlist"
+                className="flex items-center space-x-3 text-gray-600 hover:text-primary-600 transition-colors font-medium py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Star className="w-5 h-5" />
+                <span>Watchlist</span>
+              </Link>
+            </div>
           </nav>
         </div>
       )}
