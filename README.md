@@ -144,7 +144,7 @@ npm run lint
 ### **Method 1: Vercel (Recommended)**
 
 #### **Quick Deploy Button**
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=[https://github.com/yourusername/animestream](https://github.com/Salman1881420/ICT-QUIZ))
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Salman1881420/ICT-QUIZ)
 
 #### **Manual Deployment**
 1. **Push to GitHub**
