@@ -1,0 +1,76 @@
+{
+  "name": "animestream",
+  "version": "1.0.0",
+  "description": "Modern anime streaming web application with advanced features - optimized for Vercel deployment",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "analyze": "ANALYZE=true npm run build",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "postbuild": "next-sitemap"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@types/node": "20.10.5",
+    "@types/react": "18.2.45",
+    "@types/react-dom": "18.2.18",
+    "typescript": "5.3.3",
+    "tailwindcss": "3.3.6",
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.32",
+    "lucide-react": "0.298.0",
+    "axios": "1.6.2",
+    "react-player": "2.13.0",
+    "framer-motion": "10.16.16",
+    "react-intersection-observer": "9.5.3",
+    "react-hot-toast": "2.4.1",
+    "class-variance-authority": "0.7.0",
+    "clsx": "2.0.0",
+    "tailwind-merge": "2.2.0",
+    "lodash": "4.17.21",
+    "@types/lodash": "4.14.202"
+  },
+  "devDependencies": {
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.0.4",
+    "@next/bundle-analyzer": "14.0.4",
+    "next-sitemap": "4.2.3"
+  },
+  "keywords": [
+    "anime",
+    "streaming",
+    "nextjs",
+    "vercel",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "consumet",
+    "pwa",
+    "mobile-first"
+  ],
+  "author": {
+    "name": "AnimeStream Team",
+    "url": "https://animestream.vercel.app"
+  },
+  "homepage": "https://animestream.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/animestream.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/animestream/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
